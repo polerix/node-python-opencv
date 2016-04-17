@@ -123,7 +123,13 @@ function Webcam(conf) {
 	this.client = new net.Socket({
 		readable: true
 	});
-	this.client.connect(port, '127.0.0.1');
+	currclient = this.client;
+
+	setTimeout(function () {
+		console.log('ready');
+		currclient.connect(port, '127.0.0.1');
+	},5000); //wait 5 seconds
+
 	this.callback = null;
 	var self = this;
 	var marqueur = 'WEBCAM';
