@@ -20,7 +20,20 @@ if __name__ == '__main__':
                 if data.startswith(FACE_RECOGNIZE):
                     buffer = int(data[6:])
                     conn.send('BUFFER OK')
-                    data = conn.recv(buffer)
+
+                    chunks = []
+                    bytes_recd = 0
+                    while bytes_recd < buffer:
+                        chunk = conn.recv(min(buffer - bytes_recd, 2048))
+                        if chunk == b'':
+                            raise RuntimeError("socket connection broken")
+                        chunks.append(chunk)
+                        bytes_recd = bytes_recd + len(chunk)
+
+                    data = b''.join(chunks)
+
+                    """data = conn.recv(buffer)"""
+
                     flux = data.split(' ')
                     faces = recognizer.Face.find(flux[0], flux[1], flux[2], float(flux[3]), int(flux[4]))
                     finds = '{"faces": ['
@@ -35,14 +48,39 @@ if __name__ == '__main__':
                 if data.startswith(MOVE_DETECTION):
                     buffer = int(data[6:])
                     conn.send('BUFFER OK')
-                    data = conn.recv(buffer)
+
+                    chunks = []
+                    bytes_recd = 0
+                    while bytes_recd < buffer:
+                        chunk = conn.recv(min(buffer - bytes_recd, 2048))
+                        if chunk == b'':
+                            raise RuntimeError("socket connection broken")
+                        chunks.append(chunk)
+                        bytes_recd = bytes_recd + len(chunk)
+
+                    data = b''.join(chunks)
+
+                    """data = conn.recv(buffer)"""
                     flux = data.split(' ')
                     (x, y, w, h) = detector.MoveDetection.find(flux[0], flux[1])
                     conn.send('{"x": "%s", "y": "%s", "w": "%s", "h": "%s"}' % (x, y, w, h))
                 if data.startswith(FACE_DETECTION):
                     buffer = int(data[6:])
                     conn.send('BUFFER OK')
-                    data = conn.recv(buffer)
+
+                    chunks = []
+                    bytes_recd = 0
+                    while bytes_recd < buffer:
+                        chunk = conn.recv(min(buffer - bytes_recd, 2048))
+                        if chunk == b'':
+                            raise RuntimeError("socket connection broken")
+                        chunks.append(chunk)
+                        bytes_recd = bytes_recd + len(chunk)
+
+                    data = b''.join(chunks)
+
+                    """data = conn.recv(buffer)"""
+
                     flux = data.split(' ')
                     faces = detector.FaceDetection.find(flux[0], flux[1], float(flux[2]), int(flux[3]))
                     finds = '{"faces": ['
