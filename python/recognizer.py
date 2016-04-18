@@ -20,6 +20,7 @@ class Face:
 
         if (trained == False):
             trained = True
+            lastCSVFile = csvFile
             file = open(csvFile)
             faceCascade = cv2.CascadeClassifier(haarcascade)
             images = []
