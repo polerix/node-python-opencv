@@ -10,7 +10,18 @@ class FaceDetection:
     def find(image, haarcascade, scaleFactor = 1.2, minNeighbors = 8):
         img = image.decode('base64', 'strict')
         img = cv2.imdecode(np.fromstring(img, dtype=np.uint8), -1)
-        faceCascade = cv2.CascadeClassifier(haarcascade)
+        return findFrame(img, haarcascade, scaleFactor, minNeighbors)
+
+    @staticmethod
+    def findFrame(img, haarcascade, scaleFactor = 1.2, minNeighbors = 8):
+        global loaded, lastcascadefile, faceCascade
+
+        if (haarcascade <> lastcascadefile):
+            loaded = False
+
+        if (loaded == False):
+            loaded = True
+            faceCascade = cv2.CascadeClassifier(haarcascade)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         gray = cv2.equalizeHist(gray)
         faces = faceCascade.detectMultiScale(gray, scaleFactor, minNeighbors)
