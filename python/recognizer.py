@@ -14,7 +14,12 @@ class Face:
         global lastCSVFile, trained, recognizer, faceCascade, names
         frame = image.decode('base64', 'strict')
         frame = cv2.imdecode(np.fromstring(frame, dtype=np.uint8), -1)
+        return findFrame(frame, csvFile, haarcascade, scaleFactor, minNeighbors)
 
+    @staticmethod
+    def findFrame(frame, csvFile, haarcascade, scaleFactor = 1.2, minNeighbors = 8):
+        global lastCSVFile, trained, recognizer, faceCascade, names
+   
         if (trained == True and lastCSVFile <> csvFile):
             trained = False
 

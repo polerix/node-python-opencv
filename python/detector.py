@@ -1,6 +1,9 @@
 import cv2, platform
 
 import numpy as np
+lastcascadefile = ''
+loaded = False
+faceCascade = None
 
 class FaceDetection:
     @staticmethod
