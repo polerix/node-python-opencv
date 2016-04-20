@@ -164,12 +164,17 @@ exports.webcamdetector = WebcamDetector;
 
 function WebcamDetector(conf) {
 	this.port = 4005;
+	var script = path.resolve(__dirname, 'python/webcam_server.py');
+
 	if (conf) {
 		if (conf.port) {
 			this.port = conf.port;
 		}
+		if (conf.useFastDetect) { //for raspberry pi
+			script = path.resolve(__dirname, 'python/webcam_detect.py');
+			console.log('use fast detect')
+		}
 	}
-	var script = path.resolve(__dirname, 'python/webcam_server.py');
 	var command = 'python ' + script + ' ' + this.port;
 	child.exec(command, options, function (error, stdout, stderr) {
 		if (error) {
