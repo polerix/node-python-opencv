@@ -72,5 +72,5 @@ class FaceDetection:
                             pt2 = (int((x + w) * image_scale), int((y + h) * image_scale))
                             cv.Rectangle(img, pt1, pt2, cv.RGB(255, 0, 0), 3, 8, 0)
                             print "x= "+str(x)+" y= "+str(y)+" w= "+str(w)+" h= "+str(h)
-        #cv.ShowImage("Face detection", img)
+        cv.ShowImage("Face detection", img)
         return faces

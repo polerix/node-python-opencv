@@ -76,8 +76,8 @@ if __name__ == '__main__':
                                     finds += ','
                             finds += ']}'
                             conn.sendall('%s' % finds)
-                        #if cv.WaitKey(10) >= 0:
-                        #        break
+                        if cv.WaitKey(10) >= 0:
+                                break
             except:
                 message = '%s' % sys.exc_value
                 message = message.replace('\\', '/').replace('\n', '').replace('\r', '')
